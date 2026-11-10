@@ -963,3 +963,67 @@ body {
 /* ========================================
    END OF CARD BACKGROUND EFFECTS
 ======================================== */
+
+/* Additional types for National Pokedex #001-250 */
+.type-poison {
+  background: #f3e8ff;
+}
+
+.pokemon-poison {
+  --type-rgb: 192, 132, 252;
+  --type-border: #d8b4fe;
+}
+
+.type-ground {
+  background: #fef3c7;
+}
+
+.pokemon-ground {
+  --type-rgb: 217, 119, 6;
+  --type-border: #fcd34d;
+}
+
+.type-bug {
+  background: #ecfccb;
+}
+
+.pokemon-bug {
+  --type-rgb: 163, 230, 53;
+  --type-border: #bef264;
+}
+
+.type-steel {
+  background: #e2e8f0;
+}
+
+.pokemon-steel {
+  --type-rgb: 148, 163, 184;
+  --type-border: #cbd5e1;
+}
+
+.type-ice {
+  background: #cffafe;
+}
+
+.pokemon-ice {
+  --type-rgb: 103, 232, 249;
+  --type-border: #a5f3fc;
+}
+
+.type-dark {
+  background: #e7e5e4;
+}
+
+.pokemon-dark {
+  --type-rgb: 120, 113, 108;
+  --type-border: #a8a29e;
+}
+
+.type-fairy {
+  background: #fce7f3;
+}
+
+.pokemon-fairy {
+  --type-rgb: 249, 168, 212;
+  --type-border: #fbcfe8;
+}

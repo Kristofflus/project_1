@@ -1,0 +1,965 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fredoka:wght@600;700&family=Baloo+2:wght@700;800&family=Lilita+One&family=Nunito:wght@900&display=swap");
+
+/* ========================================
+   PAGE LAYOUT
+======================================== */
+
+body {
+  background: #f4f6f8;
+  color: #334155;
+  font-family: "DM Sans", sans-serif;
+}
+
+.app {
+  width: 85%;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 40px 32px 64px;
+
+  background: #ffffff;
+  border: 1px solid #dce2ea;
+  border-radius: 24px;
+
+  box-shadow:
+    0 4px 8px rgba(15, 23, 42, 0.03),
+    0 20px 50px rgba(15, 23, 42, 0.08);
+}
+
+/* ========================================
+   HEADER
+======================================== */
+
+.app-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* ========================================
+   POKEDEX HEADER - HOLOGRAPHIC
+======================================== */
+
+.pokedex-title {
+  /* Change this to experiment with fonts */
+  font-family: "Nunito", sans-serif;
+  font-size: clamp(42px, 7vw, 100px);
+  font-weight: 700;
+
+  /* Default Pokémon-inspired colours */
+  color: #ffcb05;
+  -webkit-text-stroke: 4px #2a75bb;
+  paint-order: stroke fill;
+
+  text-align: center;
+  line-height: 1.3;
+  letter-spacing: -1px;
+  margin: 24px 0 32px;
+
+  /* Prepare the holographic background */
+  background-image: linear-gradient(110deg, #ffcb05 0%, #ffcb05 100%);
+
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  transition:
+    color 0.3s ease,
+    filter 0.3s ease;
+}
+
+/* Activate holographic effect */
+
+.pokedex-title:hover {
+  color: transparent;
+
+  background-image: linear-gradient(
+    110deg,
+    #ff84bd,
+    #ffe066,
+    #78f0c9,
+    #7bb7ff,
+    #c49cff,
+    #ff84bd
+  );
+
+  background-size: 250% 100%;
+
+  animation: title-foil 3s linear infinite;
+
+  filter: drop-shadow(0 3px 3px rgba(42, 117, 187, 0.18));
+}
+
+/* Animate the rainbow */
+
+@keyframes title-foil {
+  from {
+    background-position: 0% 50%;
+  }
+
+  to {
+    background-position: 250% 50%;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .pokedex-title:hover {
+    animation: none;
+  }
+}
+
+/* ========================================
+   EXPLORER CONTROLS
+======================================== */
+
+.explorer-controls {
+  width: 100%;
+  margin-bottom: 28px;
+}
+
+/* Toolbar: left dropdown, right toggle */
+
+.filter-bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: end;
+  width: 100%;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* Type dropdown */
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  justify-self: start;
+  gap: 8px;
+  width: 200px;
+  max-width: 100%;
+}
+
+.filter-group label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #64748b;
+}
+
+.filter-group select {
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 2px solid #cbd5e1;
+  border-radius: var(--control-radius);
+  background: var(--pokedex-bg);
+  color: #334155;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+
+  transition: border-color 0.2s;
+}
+
+.filter-group select:hover {
+  border-color: #94a3b8;
+}
+
+.filter-group select:focus-visible {
+  outline: 2px solid #2a75bb;
+  outline-offset: 2px;
+}
+
+/* Favourites toggle */
+
+.favorites-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: end;
+  gap: 9px;
+
+  width: 155px;
+  max-width: 100%;
+  height: 44px;
+  padding: 0 12px;
+
+  background: var(--pokedex-bg);
+  border: 2px solid #cbd5e1;
+  border-radius: var(--control-radius);
+  color: #334155;
+
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+}
+
+.favorites-toggle:hover {
+  background: var(--pokedex-bg);
+  border-color: #94a3b8;
+}
+
+.favorites-toggle.active {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+.favorites-toggle:focus-visible {
+  outline: 2px solid #2a75bb;
+  outline-offset: 2px;
+}
+
+.toggle-star {
+  font-size: 21px;
+  line-height: 1;
+  color: #f59e0b;
+}
+
+/* ========================================
+   RESULTS SUMMARY
+======================================== */
+
+.results-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 14px 2px;
+  border-top: 1px solid #cadfeb;
+  border-bottom: 1px solid #cadfeb;
+
+  font-size: 13px;
+  color: #64748b;
+}
+
+.results-summary strong {
+  color: #334155;
+  font-weight: 700;
+}
+
+.favorites-count {
+  color: #b45309;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ========================================
+   POKEMON GRID
+======================================== */
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* ========================================
+   POKEMON CARDS
+======================================== */
+
+.pokemon-card {
+  --type-rgb: 148, 163, 184;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.pokemon-card img {
+  width: 120px;
+  height: 120px;
+  max-width: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.pokemon-card h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #334155;
+  margin: 12px 0;
+}
+
+/* ========================================
+   POKEMON TYPE LABELS
+======================================== */
+
+.type {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: #e5e7eb;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.type-grass {
+  background: #dcfce7;
+}
+
+.type-fire {
+  background: #fee2e2;
+}
+
+.type-water {
+  background: #dbeafe;
+}
+
+.type-electric {
+  background: #fef3c7;
+}
+
+.type-psychic {
+  background: #fce7f3;
+}
+
+.type-ghost {
+  background: #ede9fe;
+}
+
+.type-dragon {
+  background: #e0e7ff;
+}
+
+.type-normal {
+  background: #e5e7eb;
+}
+
+.type-fighting {
+  background: #ffedd5;
+}
+
+.type-rock {
+  background: #e7e5e4;
+}
+
+.pokemon-grass {
+  --type-rgb: 74, 222, 128;
+  --type-border: #86efac;
+}
+
+.pokemon-fire {
+  --type-rgb: 251, 146, 60;
+  --type-border: #fdba74;
+}
+
+.pokemon-water {
+  --type-rgb: 96, 165, 250;
+  --type-border: #93c5fd;
+}
+
+.pokemon-electric {
+  --type-rgb: 250, 204, 21;
+  --type-border: #fde047;
+}
+
+.pokemon-psychic {
+  --type-rgb: 244, 114, 182;
+  --type-border: #f9a8d4;
+}
+
+.pokemon-normal {
+  --type-rgb: 156, 163, 175;
+  --type-border: #cbd5e1;
+}
+
+.pokemon-ghost {
+  --type-rgb: 167, 139, 250;
+  --type-border: #c4b5fd;
+}
+
+.pokemon-dragon {
+  --type-rgb: 129, 140, 248;
+  --type-border: #a5b4fc;
+}
+
+.pokemon-fighting {
+  --type-rgb: 251, 146, 60;
+  --type-border: #fdba74;
+}
+
+.pokemon-rock {
+  --type-rgb: 168, 162, 158;
+  --type-border: #d6d3d1;
+}
+
+/* ========================================
+   HP AND ATTACK BARS
+======================================== */
+
+.pokemon-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+}
+
+.stat {
+  width: 100%;
+}
+
+.stat-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 13px;
+  color: #475569;
+}
+
+.stat-bar {
+  width: 100%;
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.stat-fill {
+  height: 100%;
+  border-radius: 5px;
+}
+
+.hp-fill {
+  background: #fca5a5;
+}
+
+.attack-fill {
+  background: #93c5fd;
+}
+
+/* ========================================
+   FAVOURITE STAR ON CARDS
+======================================== */
+
+.favorite-button {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+
+  border: none;
+  background: transparent;
+  padding: 4px;
+
+  font-size: 28px;
+  color: #aaa;
+  line-height: 1;
+  cursor: pointer;
+
+  transition:
+    color 0.2s,
+    transform 0.2s;
+}
+
+.favorite-button:hover {
+  color: #f59e0b;
+  transform: scale(1.15);
+}
+
+.favorite-button.is-favorite {
+  color: #f59e0b;
+}
+
+.favorite-button:focus-visible {
+  outline: 2px solid #2a75bb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ========================================
+   EMPTY FILTER RESULTS
+======================================== */
+
+.empty-message {
+  text-align: center;
+  color: #64748b;
+  padding: 48px 16px;
+}
+
+.empty-star {
+  display: block;
+  font-size: 40px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.empty-message h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #334155;
+  margin: 0 0 8px;
+}
+
+.empty-message p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE LAYOUT
+======================================== */
+
+/* Tablets */
+
+@media (max-width: 800px) {
+  .pokemon-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Small phones */
+
+@media (max-width: 480px) {
+  .app {
+    padding: 20px 14px 40px;
+  }
+
+  .app-header {
+    margin-bottom: 28px;
+  }
+
+  .pokedex-title {
+    margin: 20px 0;
+    -webkit-text-stroke: 3px #2a75bb;
+  }
+
+  .filter-bar {
+    gap: 12px;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .favorites-toggle {
+    width: 100%;
+    min-width: 0;
+    padding: 0 8px;
+    font-size: 12px;
+  }
+
+  .results-summary {
+    font-size: 12px;
+  }
+}
+
+/* Very narrow screens */
+
+@media (max-width: 450px) {
+  .pokemon-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Smooth colour changes */
+
+.type,
+.stat-fill {
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
+}
+
+/* Stronger type labels */
+
+.pokemon-card:hover .type {
+  background-color: rgb(var(--type-rgb), 0.65);
+  color: #1f2937;
+}
+
+/* Stronger stat bars */
+
+.pokemon-card:hover .hp-fill {
+  background: #ef4444;
+}
+
+.pokemon-card:hover .attack-fill {
+  background: #3b82f6;
+}
+
+/* Slight emphasis on Pokémon name */
+
+.pokemon-card h2 {
+  transition: color 0.25s ease;
+}
+
+.pokemon-card:hover h2 {
+  color: #0f172a;
+}
+
+/* ========================================
+   CARD BACKGROUND EFFECTS
+======================================== */
+
+/*
+  ACTIVE: HOLOGRAPHIC FOIL
+
+  To switch effects:
+  1. Comment out the active holographic section.
+  2. Uncomment the nebula section at the bottom.
+
+  Intensity presets:
+  Subtle:   --foil-intensity: 0.35
+  Balanced: --foil-intensity: 0.70
+  Vibrant:  --foil-intensity: 1.00
+*/
+
+/* ========================================
+   OPTION A: HOLOGRAPHIC FOIL - ACTIVE
+======================================== */
+
+/* Main settings */
+
+.pokemon-card {
+  --foil-intensity: 0.7;
+  --pointer-x: 50%;
+  --pointer-y: 50%;
+
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+/* Layer 1: Rainbow foil and type tint */
+
+.pokemon-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    /* Type-specific colour */
+    radial-gradient(
+      ellipse at 50% 50%,
+      rgba(var(--type-rgb), 0.3),
+      transparent 75%
+    ),
+    /* Iridescent rainbow */
+    linear-gradient(
+        115deg,
+        rgba(255, 110, 180, 0.35),
+        rgba(255, 220, 100, 0.38),
+        rgba(100, 240, 200, 0.38),
+        rgba(110, 170, 255, 0.38),
+        rgba(200, 130, 255, 0.35),
+        rgba(255, 110, 180, 0.35)
+      );
+
+  background-size:
+    100% 100%,
+    250% 250%;
+
+  background-position:
+    center,
+    0% 50%;
+
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+}
+
+/* Layer 2: Mouse-following reflection */
+
+.pokemon-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    /* Bright spot following cursor */
+    radial-gradient(
+      circle at var(--pointer-x) var(--pointer-y),
+      rgba(255, 255, 255, 0.85) 0%,
+      rgba(255, 255, 255, 0.35) 18%,
+      transparent 45%
+    ),
+    /* Moving diagonal shine */
+    linear-gradient(
+        115deg,
+        transparent 25%,
+        rgba(255, 255, 255, 0.05) 38%,
+        rgba(255, 255, 255, 0.65) 50%,
+        rgba(255, 255, 255, 0.05) 62%,
+        transparent 75%
+      );
+
+  background-size:
+    100% 100%,
+    250% 250%;
+
+  background-position:
+    center,
+    0% 50%;
+
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+/* Keep card contents above foil */
+
+.pokemon-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Favourite button stays clickable */
+
+.pokemon-card .favorite-button {
+  position: absolute;
+  z-index: 2;
+}
+
+/* Activate foil on hover */
+
+/* Mouse-controlled holographic foil */
+
+.pokemon-card:hover::before {
+  opacity: var(--foil-intensity);
+
+  /* Rainbow gradient follows pointer */
+  background-position:
+    center,
+    var(--pointer-x) var(--pointer-y);
+
+  animation: none;
+}
+
+.pokemon-card:hover::after {
+  opacity: var(--foil-intensity);
+
+  /* Reflection follows pointer */
+  background-position:
+    center,
+    var(--pointer-x) var(--pointer-y);
+
+  animation: none;
+}
+
+/* Holographic border */
+
+.pokemon-card:hover {
+  transform: translateY(-4px);
+
+  border-color: transparent;
+
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(
+        120deg,
+        #f9a8d4,
+        #fde68a,
+        #86efac,
+        #93c5fd,
+        #c4b5fd,
+        #f9a8d4
+      )
+      border-box;
+
+  box-shadow:
+    0 0 0 1px rgba(var(--type-rgb), 0.25),
+    0 8px 24px rgba(var(--type-rgb), 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+/* Automatic rainbow animation */
+
+@keyframes foil-rainbow {
+  0% {
+    background-position:
+      center,
+      0% 50%;
+  }
+
+  50% {
+    background-position:
+      center,
+      100% 50%;
+  }
+
+  100% {
+    background-position:
+      center,
+      40% 100%;
+  }
+}
+
+/* Automatic reflective sweep */
+
+@keyframes foil-reflection {
+  0% {
+    background-position:
+      center,
+      0% 50%;
+  }
+
+  100% {
+    background-position:
+      center,
+      100% 50%;
+  }
+}
+
+/* Accessibility: reduce animations */
+
+@media (prefers-reduced-motion: reduce) {
+  .pokemon-card:hover::before,
+  .pokemon-card:hover::after {
+    animation: none;
+  }
+
+  .pokemon-card,
+  .pokemon-card::before,
+  .pokemon-card::after {
+    transition: none;
+  }
+}
+
+.pokemon-card {
+  border: 2px solid var(--type-border, #e2e8f0);
+  box-shadow: 0 0 0 1px rgba(var(--type-rgb), 0.12);
+}
+
+/* ========================================
+   POKEDEX BACKGROUND AND STAT COLOURS
+======================================== */
+
+:root {
+  --pokedex-bg: #e8f3fc;
+
+  --attack-color: #86cfa0;
+  --attack-hover: #16a34a;
+}
+
+/* Light blue application background */
+
+.app {
+  background-color: var(--pokedex-bg);
+  border-color: #cadfeb;
+}
+
+/* Attack bar: pastel green */
+
+.attack-fill {
+  background-color: var(--attack-color);
+}
+
+/* Attack bar: stronger green on hover */
+
+.pokemon-card:hover .attack-fill {
+  background-color: var(--attack-hover);
+}
+
+/* Keep card backgrounds white */
+
+.pokemon-card {
+  background-color: white;
+}
+
+/* ========================================
+   OPTION B: NEBULA GLOW - DISABLED
+======================================== */
+
+/*
+  ORIGINAL BACKGROUND EFFECT
+
+  To restore:
+  - Disable Option A above.
+  - Remove the comment markers surrounding
+    the CSS below.
+  - Keep the existing --type-rgb definitions.
+
+.pokemon-card::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+
+  background:
+    radial-gradient(
+      ellipse at 30% 30%,
+      rgba(var(--type-rgb), 0.5),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 75% 70%,
+      rgba(var(--type-rgb), 0.4),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 50% 90%,
+      rgba(var(--type-rgb), 0.3),
+      transparent 40%
+    );
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.35s ease;
+  animation: card-glow 5s ease-in-out
+    infinite alternate;
+}
+
+.pokemon-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(var(--type-rgb), 0.8);
+
+  box-shadow:
+    0 8px 24px rgba(var(--type-rgb), 0.22),
+    0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.pokemon-card:hover::before {
+  opacity: 1;
+}
+
+@keyframes card-glow {
+  0% {
+    transform: translate(-15%, -10%) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(10%, 10%) rotate(12deg);
+  }
+
+  100% {
+    transform: translate(-5%, 15%) rotate(-12deg);
+  }
+}
+
+*/
+
+/* ========================================
+   END OF CARD BACKGROUND EFFECTS
+======================================== */
